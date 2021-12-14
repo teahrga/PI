@@ -1,26 +1,15 @@
 # Copyright 2021 Group 21 @ PI (120)
 
 
-import re
-from typing import Optional 
-from pydantic import BaseModel
+from sqlalchemy import Column, Integer, String
 
-class RoomBase(BaseModel):
-    potential: Optional[str]
+from core.database.database import Base
 
 
-class RoomCreate(RoomBase):
-    potential: str
+class Room(Base):
+    __tablename__ = 'rooms'
 
-
-class RoomUpdate(RoomBase):
-    pass
-
-
-class Room(RoomBase):
-    id: int
-    host_id: int
-    number_of_votes: int
-
-    class Config:
-        orm_mode = True
+    id = Column(Integer, primary_key=True)
+    host_id=Column(Integer, null=False)
+    number_of_votes=Column(Integer, null=False, default=1)
+    potential = Column(String, unique=True)
